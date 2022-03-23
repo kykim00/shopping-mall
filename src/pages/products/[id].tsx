@@ -6,7 +6,7 @@ import { Product } from "../../types";
 
 const ProductDetailPage = () => {
   const { id } = useParams();
-  const { data } = useQuery<Product>(QueryKeys.PRODUCTS, () =>
+  const { data } = useQuery<Product>([QueryKeys.PRODUCTS, id], () =>
     fetcher({
       method: "GET",
       path: `/products/${id}`,
@@ -16,7 +16,7 @@ const ProductDetailPage = () => {
   return (
     <div>
       <h2>상품 상세</h2>
-      <ProductDetail item={data} />;
+      <ProductDetail item={data} />
     </div>
   );
 };
