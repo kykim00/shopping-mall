@@ -1,7 +1,13 @@
 import { graphql } from "msw";
 import { QueryKeys } from "../queryClient";
 import GET_PRODUCTS, { GET_PRODUCT } from "../graphql/products";
-import { ADD_CART, CartType, GET_CART, UPDATE_CART } from "../graphql/carts";
+import {
+  ADD_CART,
+  CartType,
+  DELETE_CART,
+  GET_CART,
+  UPDATE_CART,
+} from "../graphql/carts";
 
 const mockProducts = Array.from({ length: 20 }).map((_, i) => ({
   id: i + 1 + "",
@@ -41,7 +47,7 @@ export const handlers = [
 
     const newItem = {
       ...targetProduct,
-      amount: newCartData[id]?.amount || 0 + 1,
+      amount: (newCartData[id]?.amount || 0) + 1,
     };
     newCartData[id] = newItem;
     cartData = newCartData;
@@ -59,5 +65,11 @@ export const handlers = [
     newData[id] = newItem;
     cartData = newData;
     return res(ctx.data(newItem));
+  }),
+  graphql.mutation(DELETE_CART, ({ variables: { id } }, res, ctx) => {
+    const newData = { ...cartData };
+    delete newData[id];
+    cartData = newData;
+    return res(ctx.data(id));
   }),
 ];
