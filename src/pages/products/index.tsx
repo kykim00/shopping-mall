@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import { ProductItem } from "../../compnents/products/item";
+import ProductList from "../../compnents/products/list";
 import GET_PRODUCTS, { Products } from "../../graphql/products";
 import { graphqlFetcher, QueryKeys } from "../../queryClient";
 
@@ -10,11 +10,7 @@ const ProductPage = () => {
   return (
     <div>
       <h2>상품 목록</h2>
-      <ul className="products">
-        {data?.products?.map((product) => (
-          <ProductItem {...product} key={product.id} />
-        ))}
-      </ul>
+      <ProductList list={data?.products || []} />
     </div>
   );
 };
