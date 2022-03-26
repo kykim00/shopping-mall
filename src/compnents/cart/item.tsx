@@ -1,7 +1,8 @@
-import { ForwardedRef, forwardRef, RefObject, SyntheticEvent } from "react";
+import { ForwardedRef, forwardRef, SyntheticEvent } from "react";
 import { useMutation } from "react-query";
 import { CartType, DELETE_CART, UPDATE_CART } from "../../graphql/carts";
 import { getClient, graphqlFetcher, QueryKeys } from "../../queryClient";
+import { ItemData } from "./itemData";
 
 const CartItem = (
   { id, imageUrl, price, title, amount }: CartType,
@@ -26,11 +27,10 @@ const CartItem = (
         queryClient.setQueryData(QueryKeys.CART, newCart);
         return prevCart;
       },
-
       onSuccess: (newValue) => {
-        const prevCart = queryClient.getQueryData<{
-          [key: string]: CartType;
-        }>(QueryKeys.CART);
+        const prevCart = queryClient.getQueryData<{ [key: string]: CartType }>(
+          QueryKeys.CART
+        );
         const newCart = {
           ...(prevCart || {}),
           [id]: newValue,
@@ -50,7 +50,7 @@ const CartItem = (
   );
 
   const handleUpdateAmount = (e: SyntheticEvent) => {
-    const amount = Number((e.target as HTMLInputElement)?.value);
+    const amount = Number((e.target as HTMLInputElement).value);
     if (amount < 1) return;
     updateCart({ id, amount });
   };
@@ -58,28 +58,27 @@ const CartItem = (
   const handleDeleteItem = () => {
     deleteCart({ id });
   };
+
   return (
     <li className="cart-item">
       <input
         className="cart-item__checkbox"
         type="checkbox"
         name="select-item"
-        id=""
         ref={ref}
+        data-id={id}
       />
-      <img src={imageUrl} />
-      <p className="price">{price} </p>
-      <p className="cart-item__title">{title}</p> {amount}
+      <ItemData imageUrl={imageUrl} price={price} title={title} />
       <input
-        type="number"
         className="cart-item__amount"
+        type="number"
         value={amount}
         min={1}
         onChange={handleUpdateAmount}
       />
       <button
-        type="button"
         className="cart-item__button"
+        type="button"
         onClick={handleDeleteItem}
       >
         삭제
