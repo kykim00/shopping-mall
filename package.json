@@ -6,8 +6,11 @@
   "author": "kykim00 <jeongsaeki@likelion.org>",
   "license": "MIT",
   "private": true,
-  "workspace": [
+  "workspaces": [
     "client",
     "server"
-  ]
+  ],
+  "scripts": {
+    "client": "yarn workspace client run dev"
+  }
 }
