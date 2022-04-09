@@ -3,7 +3,7 @@ export type Resolver = {
     [key: string]: (
       parent: any,
       args: { [key: string]: any },
-      context: {},
+      context: any,
       info: any
     ) => any;
   };
