@@ -28,7 +28,6 @@ export type Products = Product[];
 export type CartItem = {
   id: String;
   amount: number;
-  product: Product;
 };
 
 export type Cart = CartItem[];
