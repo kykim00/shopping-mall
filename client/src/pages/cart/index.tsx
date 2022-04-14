@@ -5,10 +5,11 @@ import { graphqlFetcher, QueryKeys } from "../../queryClient";
 
 const Cart = () => {
   const { data } = useQuery(QueryKeys.CART, () => graphqlFetcher(GET_CART), {
-    staleTime:0,
+    staleTime: 0,
     cacheTime: 1000,
   });
-  const cartItems = Object.values(data || {}) as CartType[];
+
+  const cartItems = (data?.cart || []) as CartType[];
   if (!cartItems.length) return <div>장바구니가 비어있습니다.</div>;
   return <CartList items={cartItems} />;
 };
