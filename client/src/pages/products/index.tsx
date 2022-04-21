@@ -1,26 +1,13 @@
-import { useCallback, useEffect, useRef, useState } from "react";
-import { useInfiniteQuery, useQuery } from "react-query";
+import { useEffect, useRef } from "react";
+import { useInfiniteQuery } from "react-query";
 import ProductList from "../../compnents/products/list";
 import GET_PRODUCTS, { Products } from "../../graphql/products";
+import useIntersectionObserver from "../../hooks/useIntersectionObserver";
 import { graphqlFetcher, QueryKeys } from "../../queryClient";
 
 const ProductPage = () => {
-  const observerRef = useRef<IntersectionObserver>();
   const fetchMoreRef = useRef<HTMLDivElement>(null);
-  const [intersecting, setIntersecting] = useState(false);
-
-  const getObserver = useCallback(() => {
-    if (!observerRef.current) {
-      observerRef.current = new IntersectionObserver((entries) => {
-        setIntersecting(entries[0]?.isIntersecting);
-      });
-    }
-    return observerRef.current;
-  }, [observerRef.current]);
-
-  useEffect(() => {
-    if (fetchMoreRef.current) getObserver().observe(fetchMoreRef.current);
-  }, [fetchMoreRef.current]);
+  const intersecting = useIntersectionObserver(fetchMoreRef);
 
   const { data, isSuccess, isFetchingNextPage, fetchNextPage, hasNextPage } =
     useInfiniteQuery<Products>(
