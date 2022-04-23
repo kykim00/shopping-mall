@@ -420,10 +420,11 @@
     "description": "임시상세내용60"
   },
   {
-    "id": "e6e71c7d-4fb8-4b5a-a42d-39a3432990db",
-    "imageUrl": "https://picsum.photos/id/61",
-    "price": 5000,
-    "title": "제대로된상품",
-    "description": "이것은진짜예요"
+    "id": "a4bdfb83-82a2-4f6f-8d09-03543b2e48cc",
+    "imageUrl": "https://picsum.photos/id/29/200/150",
+    "price": 400000,
+    "title": "진짜상품",
+    "description": "real 상품 상세",
+    "createdAt": 1650723646910
   }
 ]
